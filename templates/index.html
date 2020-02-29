@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dropzone.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome.min') }}">
+</head>
+<body>
+    <form action="{{ url_for('upload_file') }}" method="post" class="dropzone" enctype="multipart/form-data">
+        {{ form1.hidden_tag() }}
+        <center>{{ form1.photo(class='btn btn-success') }}</center>
+        {% for error in form1.photo.errors %}
+            <span style="color: red">{{ error }}</span>
+        {% endfor %}
+        <center>{{ form1.submit(class='btn btn-primary') }}</center>
+    </form>
+    <br>
+    {#{% if file_url %}#}
+    {#    <br><img src="{{ file_url }}">#}
+    {#{% endif %}#}
+    <ul class="list-group">
+        {% for file in file_list %}
+            <li class="list-group-item list-group-item-action">
+                <img src="{{ photos.url(file) }}" height="8%" width="8%" >
+                {{ file }}
+                <a href="delete/{{ file }}"><button class="btn btn-danger" style="float: right">delete</button></a>
+                <a href="{{ photos.url(file) }}"><button class="btn btn-info" style="float: right">open</button></a>
+            </li>
+        {% endfor %}
+    </ul>
+    <script src="{{ url_for('static', filename='dropzone.js') }}"></script>
+</body>
+</html>
